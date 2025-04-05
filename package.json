@@ -1,15 +1,14 @@
 {
-    "name": "cmnt-reply-notify-func",
-    "version": "1.0.0",
-    "type": "module",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js"
-    },
-    "dependencies": {
-      "nodemailer": "^6.9.3",
-      "dotenv": "^16.3.1",
-      "appwrite": "^10.1.0"
-    }
+  "name": "comment-reply-email",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.3",
+    "dotenv": "^16.3.1",
+    "appwrite": "^10.1.0"
   }
-  
+}
