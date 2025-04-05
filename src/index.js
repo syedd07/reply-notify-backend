@@ -20,6 +20,8 @@ export default async ({ req, res, log }) => {
   try {
     log("Received event");
     log("Raw payload:", req.payload);
+    log("Full request object:", JSON.stringify(req));
+
 
     // Safely handle missing payload
     if (!req.payload) {
