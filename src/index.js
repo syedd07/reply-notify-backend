@@ -13,7 +13,7 @@ const {
   SMTP_HOST,
   SMTP_PORT,
   FROM_EMAIL,
-  FROM_NAME
+  FROM_NAME,
 } = process.env;
 
 export default async ({ req, res, log }) => {
@@ -27,7 +27,7 @@ export default async ({ req, res, log }) => {
 
     let payload;
     try {
-      payload = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+      payload = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
     } catch (err) {
       log("Failed to parse body:", req.body);
       return res.send("Invalid JSON body: " + err.message);
@@ -46,12 +46,17 @@ export default async ({ req, res, log }) => {
     const databases = new Databases(client);
 
     // Fetch parent comment
-    const parent = await databases.getDocument(
-      DATABASE_ID,
-      COLLECTION_ID,
-      payload.parentId
-    );
-
+    let parent;
+    try {
+      parent = await databases.getDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        payload.parentId
+      );
+    } catch (err) {
+      log("Failed to fetch parent comment:", err.message);
+      return res.send("Parent comment not found or error occurred.");
+    }
     const recipientEmail = parent.email;
     const commenterName = payload.name;
     const articleId = payload.articleId;
@@ -62,8 +67,8 @@ export default async ({ req, res, log }) => {
       port: parseInt(SMTP_PORT),
       auth: {
         user: SMTP_USER,
-        pass: SMTP_PASS
-      }
+        pass: SMTP_PASS,
+      },
     });
 
     // Compose and send the email
@@ -77,7 +82,7 @@ export default async ({ req, res, log }) => {
         <p><em>"${payload.text}"</em></p>
         <p>Visit the article to see the full conversation.</p>
         <p>— Beyond Science Magazine</p>
-      `
+      `,
     });
 
     return res.send("Email sent to parent commenter");
