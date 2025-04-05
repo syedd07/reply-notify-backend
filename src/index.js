@@ -71,6 +71,8 @@ export default async ({ req, res, log }) => {
       },
     });
 
+    log("Sending from email:", FROM_EMAIL);
+
     // Compose and send the email
     try {
       await transporter.sendMail({
