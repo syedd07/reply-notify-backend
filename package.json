@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "node-appwrite": "^10.1.0",
+    "node-appwrite": "^9.0.1"
     "nodemailer": "^6.9.3",
     "dotenv": "^16.3.1",
     "appwrite": "^10.1.0"
