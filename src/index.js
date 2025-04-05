@@ -18,6 +18,9 @@ const {
 
 export default async ({ req, res, log }) => {
   try {
+    log("Received event");
+    log("Raw payload:", req.payload);
+
     // Safely handle missing payload
     if (!req.payload) {
       return res.send("No payload received.");
@@ -27,6 +30,7 @@ export default async ({ req, res, log }) => {
     try {
       payload = JSON.parse(req.payload);
     } catch (err) {
+      log("Failed to parse payload:", req.payload);
       return res.send("Invalid JSON payload: " + err.message);
     }
 
