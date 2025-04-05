@@ -19,22 +19,18 @@ const {
 export default async ({ req, res, log }) => {
   try {
     log("Received event");
-    log("Raw payload:", req.payload);
-    log("Full request object:", JSON.stringify(req));
+    log("Raw body:", req.body);
 
-
-    // Safely handle missing payload
-    if (!req.payload) {
-      return res.send("No payload received.");
-    }
-
-    let payload;
-    try {
-      payload = JSON.parse(req.payload);
-    } catch (err) {
-      log("Failed to parse payload:", req.payload);
-      return res.send("Invalid JSON payload: " + err.message);
-    }
+      if (!req.body) {
+       return res.send("No body received.");
+      }
+      let payload;
+      try {
+        payload = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+      } catch (err) {
+        log("Failed to parse body:", req.body);
+        return res.send("Invalid JSON body: " + err.message);
+      }
 
     // If no parentId, it's not a reply → no email needed
     if (!payload.parentId) {
