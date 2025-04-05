@@ -72,22 +72,33 @@ export default async ({ req, res, log }) => {
     });
 
     // Compose and send the email
-    await transporter.sendMail({
-      from: `${FROM_NAME} <${FROM_EMAIL}>`,
-      to: recipientEmail,
-      subject: "Someone replied to your comment!",
-      html: `
-        <p>Hi ${parent.name},</p>
-        <p><strong>${commenterName}</strong> has replied to your comment on the article: <strong>${articleId}</strong>.</p>
-        <p><em>"${payload.text}"</em></p>
-        <p>Visit the article to see the full conversation.</p>
-        <p>— Beyond Science Magazine</p>
-      `,
-    });
+    try {
+      await transporter.sendMail({
+        from: `${FROM_NAME} <${FROM_EMAIL}>`,
+        to: recipientEmail,
+        subject: "Someone replied to your comment!",
+        html: `
+          <p>Hi ${parent.name},</p>
+          <p><strong>${commenterName}</strong> has replied to your comment on the article: <strong>${articleId}</strong>.</p>
+          <p><em>"${payload.text}"</em></p>
+          <p>Visit the article to see the full conversation.</p>
+          <p>— Beyond Science Magazine</p>
+        `
+      });
+    
+      log("Email sent successfully to:", recipientEmail);
+      return res.send("Email sent to parent commenter");
+    } catch (emailError) {
+      log("Failed to send email:", emailError.message);
+      return res.send("Failed to send email: " + emailError.message);
+    }
+  }
 
-    return res.send("Email sent to parent commenter");
-  } catch (error) {
-    log(error);
-    return res.send("Error sending email: " + error.message);
+  catch (error) {
+    log("Error:", error.message);
+    return res.send("An error occurred: " + error.message);
+  }
+  finally {
+    log("Event processing completed.");
   }
 };
