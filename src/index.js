@@ -21,16 +21,17 @@ export default async ({ req, res, log }) => {
     log("Received event");
     log("Raw body:", req.body);
 
-      if (!req.body) {
-       return res.send("No body received.");
-      }
-      let payload;
-      try {
-        payload = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-      } catch (err) {
-        log("Failed to parse body:", req.body);
-        return res.send("Invalid JSON body: " + err.message);
-      }
+    if (!req.body) {
+      return res.send("No body received.");
+    }
+
+    let payload;
+    try {
+      payload = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    } catch (err) {
+      log("Failed to parse body:", req.body);
+      return res.send("Invalid JSON body: " + err.message);
+    }
 
     // If no parentId, it's not a reply → no email needed
     if (!payload.parentId) {
@@ -79,9 +80,9 @@ export default async ({ req, res, log }) => {
       `
     });
 
-    res.send("Email sent to parent commenter");
+    return res.send("Email sent to parent commenter");
   } catch (error) {
     log(error);
-    res.send("Error sending email: " + error.message);
+    return res.send("Error sending email: " + error.message);
   }
 };
