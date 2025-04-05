@@ -130,21 +130,15 @@ export default async ({
     <p style="font-size:14px;">
       — <strong>BEYOND SC!ENCE MAGAZINE</strong>
     </p>
-
-    <p style="font-size:12px;margin-top:10px;">
-      <a href="https://beyondsciencemagazine.studio/report-abuse" style="color:#555;text-decoration:underline;">Report abuse</a>
-    </p>
-
     <p style="font-size:12px;color:#888;margin-top:20px;">
       You are receiving this notification because someone replied to your comment on BEYOND SC!ENCE MAGAZINE.
     </p>
-  </div>
-
-  <p style="font-size: 12px;">
-  <a href="https://beyondsciencemagazine.studio/report-abuse" style="color: #999; text-decoration: underline;">Report abuse</a>
-</p>
- </div>
-</body>
+    </div>
+    <p style="font-size: 12px;">
+    <a href="https://beyondsciencemagazine.studio/report-abuse" style="color: #999; text-decoration: underline;">Report abuse</a>
+    </p>
+    </div>
+    </body>
 
         `,
 			});
